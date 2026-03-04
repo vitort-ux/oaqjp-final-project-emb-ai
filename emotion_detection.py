@@ -1,4 +1,5 @@
-import requests 
+import requests
+import json
 
 def emotion_detector(text_to_analyse): 
     # URL of the sentiment analysis service 
@@ -12,8 +13,28 @@ def emotion_detector(text_to_analyse):
 
     # Sending a POST request to the sentiment analysis API 
     response = requests.post(url, json=myobj, headers=header)
+
+    # Parsing the JSON response from the API 
+    formatted_response = json.loads(response.text)
+
+    anger_score = formatted_response['emotionPredictions'][0]['emotion']['anger']
+    disgust_score = formatted_response['emotionPredictions'][0]['emotion']['disgust']
+    fear_score = formatted_response['emotionPredictions'][0]['emotion']['fear']
+    joy_score = formatted_response['emotionPredictions'][0]['emotion']['joy']
+    sadness_score = formatted_response['emotionPredictions'][0]['emotion']['sadness']
     
-    return response.text
+    emotions = formatted_response['emotionPredictions'][0]['emotion']
+    max_emotion = max(emotions, key=emotions.get)
+    max_value = emotions[max_emotion]
+
+    return {
+            'anger': anger_score,
+            'disgust': disgust_score,
+            'fear': fear_score,
+            'joy': joy_score,
+            'sadness': sadness_score,
+            'dominant_emotion': max_emotion
+            }
 
 
 if __name__ == '__main__':
