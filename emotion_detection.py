@@ -1,5 +1,4 @@
 import requests 
-import json
 
 def emotion_detector(text_to_analyse): 
     # URL of the sentiment analysis service 
@@ -18,5 +17,5 @@ def emotion_detector(text_to_analyse):
 
 
 if __name__ == '__main__':
-    resposta = emotion_detector("Gosto de maça")
+    resposta = emotion_detector("I love this new technology.")
     print(resposta)
