@@ -32,6 +32,9 @@ def sent_analyzer():
     sadness_score = response['sadness']
     res_dominant_emotion = response['dominant_emotion']
 
+    if res_dominant_emotion is None:
+        return "Invalid text! Please try again!"
+
     return f"For the given statement, the system response is 'anger': {anger_score}, 'disgust': {disgust_score}, 'fear': {fear_score}, 'joy': {joy_score} and 'sadness': {sadness_score}. The dominant emotion is {res_dominant_emotion}."
 
 @app.route("/")
